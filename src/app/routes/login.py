@@ -13,6 +13,7 @@ from ..constants import(
     ACCESS_TOKEN_EXPIRE_MINUTES,
     PWD_CONTEXT
 )
+from ..utils.common import wrap_response
 
 from datetime import datetime, timedelta
 from jose import jwt, JWTError
@@ -42,10 +43,11 @@ def login(request: OAuth2PasswordRequestForm=Depends(), db: Session=Depends(get_
         }
     )
     print(f"login:: access_token: {access_token}")
-    return {
+    response = {
         "access_token": access_token,
         "token_type": "bearer"
     }
+    return response
 
 def get_current_user(token: str=Depends(oauth2_schme)):
     credentials_exception = HTTPException(
