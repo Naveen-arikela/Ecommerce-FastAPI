@@ -29,7 +29,7 @@ def get_products(db: Session=Depends(get_db), user_auth: schemas.UserCreatedResp
 
 #add product
 @router.post('/product', status_code=status.HTTP_201_CREATED)
-def add_product(request: schemas.Product, db: Session=Depends(get_db), user_auth: schemas.UserCreatedResponseModel=Depends(get_current_user)):
+def add_product(request: schemas.ProductSchema, db: Session=Depends(get_db), user_auth: schemas.UserCreatedResponseModel=Depends(get_current_user)):
     try:
         new_product = models.Product(product_name=request.product_name, price=request.price, user_id=request.user_id)
         db.add(new_product)
@@ -40,7 +40,7 @@ def add_product(request: schemas.Product, db: Session=Depends(get_db), user_auth
         return wrap_response(code=status.HTTP_400_BAD_REQUEST, msg=f"Exception: {e}")
 
 @router.put('/product/{id}')
-def update_product(id, request: schemas.Product, db: Session=Depends(get_db), user_auth: schemas.UserCreatedResponseModel=Depends(get_current_user)):
+def update_product(id, request: schemas.ProductSchema, db: Session=Depends(get_db), user_auth: schemas.UserCreatedResponseModel=Depends(get_current_user)):
     try:
         product = db.query(models.Product).filter(models.Product.id == id)
         if not product.first():

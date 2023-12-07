@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from typing import Optional
 
-class UserCreation(BaseModel):
+class UserCreationSchema(BaseModel):
     username: str
     email: str
     password: str
@@ -25,7 +25,7 @@ class ProductsResponseModel(BaseModel):
     class Config:
         orm_mode = True
 
-class Product(BaseModel):
+class ProductSchema(BaseModel):
     product_name: str
     price: int
     user_id: int

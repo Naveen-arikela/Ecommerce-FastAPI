@@ -31,12 +31,12 @@ def generate_token(data: dict):
 @router.post('/login')
 def login(request: OAuth2PasswordRequestForm=Depends(), db: Session=Depends(get_db)):
     user = db.query(models.User).filter(models.User.username == request.username).first()
-    print(f"login:: user_id::{user.id}")
-
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
     if not PWD_CONTEXT.verify(request.password, user.password):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Invalid password")
+    
+    print(f"login:: user_id::{user.id}")
     access_token = generate_token(
         data={
             "sub": str(user.id)

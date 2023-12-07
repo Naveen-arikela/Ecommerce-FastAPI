@@ -16,7 +16,7 @@ router = APIRouter(
 
 # @router.post('/create-user', response_model=schemas.UserCreatedResponseModel)
 @router.post('/create-user')
-def create_user(request: schemas.UserCreation, db: Session=Depends(get_db), user_auth: schemas.UserCreation=Depends(get_current_user)):
+def create_user(request: schemas.UserCreationSchema, db: Session=Depends(get_db), user_auth: schemas.UserCreationSchema=Depends(get_current_user)):
     try:
         hashed_password = PWD_CONTEXT.hash(request.password)
         new_user = models.User(username=request.username, email=request.email, password=hashed_password)
