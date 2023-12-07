@@ -1,5 +1,4 @@
 
-
 def wrap_response(code, msg, data=""):
     response = {
         "status_code": code,
